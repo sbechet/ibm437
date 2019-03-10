@@ -2,19 +2,17 @@
 
 [source](http://www.minuszerodegrees.net/rom/rom.htm)
 
-~~~
-Make: IBM
-Model: MDA/CGA
-Function: Display adapters
-Year: ?
-Data Type: Font
-Sum: 06DDC0
-Chip Type: [MK36000](MK36000 substitution.png)
-Size: 8 KB
-Copy: C
-Source: modem7
-Description/Comment: IBM part number on chip is 5788005
-~~~
+-   Make: IBM
+-   Model: MDA/CGA
+-   Function: Display adapters
+-   Year: ?
+-   Data Type: Font
+-   Sum: 06DDC0
+-   Chip Type: [MK36000](MK36000 substitution.png)
+-   Size: 8 KB
+-   Copy: C
+-   Source: modem7
+-   Description/Comment: IBM part number on chip is 5788005
 
 There are TWO CGA fonts in the ROM: a thin 5x7 "single dot" font located at 
 offset 0x1000, and a thick 7x7 "double dot" font at offset 0x1800.
