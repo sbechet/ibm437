@@ -6,6 +6,7 @@
 # \r = CR = 0x0d = ^M
 # \n = LN = 0x0a
 
+# sudo apt-get install python3-pil
 # sudo pacman -S python-pillow
 from PIL import Image
 
