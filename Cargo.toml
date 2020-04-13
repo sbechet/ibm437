@@ -1,0 +1,17 @@
+[package]
+name = "ibm437"
+version = "0.1.0"
+authors = ["Sebastien Bechet <sebastien.bechet@osinix.com>"]
+edition = "2018"
+
+documentation = "https://docs.rs/ibm437"
+repository = "https://github.com/sbechet/ibm437"
+
+readme = "README.md"
+license = "MIT"
+
+keywords = ["bitmap", "monochrome", "font", "monospace"]
+categories = ["rendering", "embedded", "no-std"]
+
+[dependencies]
+embedded-graphics = "0.6"
