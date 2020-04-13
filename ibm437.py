@@ -66,7 +66,7 @@ for i in range(256):
             image = image + '0'
 
     printAscii(i, image)
-    saveImage(i, image, reverse=True)
+    saveImage(i, image, reverse=False)
 
 ##############################################################################
 # Second font 8x8 (CGA)
@@ -78,7 +78,7 @@ for i in range(256):
         image = image + "{0:08b}".format(elem[j])
 
     printAscii(i, image, width=8, height=8)
-    saveImage(i, image, width=8, height=8, reverse=True)
+    saveImage(i, image, width=8, height=8, reverse=False)
 
 ##############################################################################
 # Third font 8x8 (CGA)
@@ -90,4 +90,4 @@ for i in range(256):
         image = image + "{0:08b}".format(elem[j])
 
     printAscii(i, image, width=8, height=8)
-    saveImage(i, image, width=8, height=8, end="bold", reverse=True)
+    saveImage(i, image, width=8, height=8, end="bold", reverse=False)

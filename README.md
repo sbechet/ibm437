@@ -8,7 +8,7 @@
 -   Year: ?
 -   Data Type: Font
 -   Sum: 06DDC0
--   Chip Type: [MK36000](MK36000 substitution.png)
+-   Chip Type: [MK36000](./MK36000 substitution.png)
 -   Size: 8 KB
 -   Copy: C
 -   Source: modem7
