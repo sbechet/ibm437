@@ -176,6 +176,9 @@ fn char_offset_impl(c: char) -> u32 {
 }
 
 /// The 8x8 normal
+///
+/// [![8x8 normal font spritemap screenshot](https://raw.githubusercontent.com/sbechet/ibm437/master/data/font_8_8_normal.png)](https://raw.githubusercontent.com/sbechet/ibm437/master/data/font_8_8_normal.png)
+///
 #[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug, Default)]
 pub struct Ibm437Font8x8Normal;
 
@@ -189,6 +192,9 @@ impl Font for Ibm437Font8x8Normal {
 }
 
 /// The 8x8 bold
+///
+/// [![8x8 bold font spritemap screenshot](https://raw.githubusercontent.com/sbechet/ibm437/master/data/font_8_8_bold.png)](https://raw.githubusercontent.com/sbechet/ibm437/master/data/font_8_8_bold.png)
+///
 #[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug, Default)]
 pub struct Ibm437Font8x8Bold;
 
@@ -202,6 +208,9 @@ impl Font for Ibm437Font8x8Bold {
 }
 
 /// The 9x14 normal
+///
+/// [![9x14 normal font spritemap screenshot](https://raw.githubusercontent.com/sbechet/ibm437/master/data/font_9_14_normal.png)](https://raw.githubusercontent.com/sbechet/ibm437/master/data/font_9_14_normal.png)
+///
 #[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug, Default)]
 pub struct Ibm437Font9x14Normal;
 
