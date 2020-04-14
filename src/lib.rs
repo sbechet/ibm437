@@ -176,8 +176,9 @@ fn char_offset_impl(c: char) -> u32 {
 }
 
 /// The 8x8 normal
-#[derive(Debug, Copy, Clone)]
-pub struct Ibm437Font8x8Normal {}
+#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug, Default)]
+pub struct Ibm437Font8x8Normal;
+
 impl Font for Ibm437Font8x8Normal {
     const FONT_IMAGE: &'static [u8] = include_bytes!("../data/font_8_8_normal.raw");
     const CHARACTER_SIZE: Size = Size::new(8, 8);
@@ -188,8 +189,9 @@ impl Font for Ibm437Font8x8Normal {
 }
 
 /// The 8x8 bold
-#[derive(Debug, Copy, Clone)]
-pub struct Ibm437Font8x8Bold {}
+#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug, Default)]
+pub struct Ibm437Font8x8Bold;
+
 impl Font for Ibm437Font8x8Bold {
     const FONT_IMAGE: &'static [u8] = include_bytes!("../data/font_8_8_bold.raw");
     const CHARACTER_SIZE: Size = Size::new(8, 8);
@@ -200,8 +202,9 @@ impl Font for Ibm437Font8x8Bold {
 }
 
 /// The 9x14 normal
-#[derive(Debug, Copy, Clone)]
-pub struct Ibm437Font9x14Normal {}
+#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug, Default)]
+pub struct Ibm437Font9x14Normal;
+
 impl Font for Ibm437Font9x14Normal {
     const FONT_IMAGE: &'static [u8] = include_bytes!("../data/font_9_14_normal.raw");
     const CHARACTER_SIZE: Size = Size::new(9, 14);
