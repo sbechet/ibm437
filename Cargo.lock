@@ -8,16 +8,16 @@ checksum = "08c48aae112d48ed9f069b33538ea9e3e90aa263cfa3d1c24309612b1f7472de"
 
 [[package]]
 name = "embedded-graphics"
-version = "0.6.1"
+version = "0.6.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "619ef7a30b5368c6350a9edb41c628499a0a77072d1bfa949044473d23734e3c"
+checksum = "40a69991ceb896bd4810a0cf2bcc46fc94b7860573c71f965d8e5b3d66942fed"
 dependencies = [
  "byteorder",
 ]
 
 [[package]]
 name = "ibm437"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "embedded-graphics",
 ]

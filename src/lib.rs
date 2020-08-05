@@ -183,7 +183,7 @@ fn char_offset_impl(c: char) -> u32 {
 pub struct Ibm437Font8x8Normal;
 
 impl Font for Ibm437Font8x8Normal {
-    const FONT_IMAGE: &'static [u8] = include_bytes!("../data/font_8_8_normal.raw");
+    const FONT_IMAGE: &'static [u8] = include_bytes!("font_8_8_normal.raw");
     const CHARACTER_SIZE: Size = Size::new(8, 8);
     const FONT_IMAGE_WIDTH: u32 = Self::CHARACTER_SIZE.width * CHARS_PER_ROW;
     fn char_offset(c: char) -> u32 {
@@ -199,7 +199,7 @@ impl Font for Ibm437Font8x8Normal {
 pub struct Ibm437Font8x8Bold;
 
 impl Font for Ibm437Font8x8Bold {
-    const FONT_IMAGE: &'static [u8] = include_bytes!("../data/font_8_8_bold.raw");
+    const FONT_IMAGE: &'static [u8] = include_bytes!("font_8_8_bold.raw");
     const CHARACTER_SIZE: Size = Size::new(8, 8);
     const FONT_IMAGE_WIDTH: u32 = Self::CHARACTER_SIZE.width * CHARS_PER_ROW;
     fn char_offset(c: char) -> u32 {
@@ -215,7 +215,7 @@ impl Font for Ibm437Font8x8Bold {
 pub struct Ibm437Font9x14Normal;
 
 impl Font for Ibm437Font9x14Normal {
-    const FONT_IMAGE: &'static [u8] = include_bytes!("../data/font_9_14_normal.raw");
+    const FONT_IMAGE: &'static [u8] = include_bytes!("font_9_14_normal.raw");
     const CHARACTER_SIZE: Size = Size::new(9, 14);
     const FONT_IMAGE_WIDTH: u32 = Self::CHARACTER_SIZE.width * CHARS_PER_ROW;
     fn char_offset(c: char) -> u32 {
