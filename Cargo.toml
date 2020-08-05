@@ -16,3 +16,8 @@ categories = ["rendering", "embedded", "no-std"]
 
 [dependencies]
 embedded-graphics = "0.6"
+
+# Setting these prevents Cargo from trying to test or bench the crate
+[ibm437]
+test = false
+bench = false
