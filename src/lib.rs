@@ -1,4 +1,4 @@
-#![no_std]
+#![cfg_attr(not(test), no_std)]
 
 extern crate embedded_graphics;
 
@@ -172,6 +172,34 @@ fn char_offset_impl(c: char) -> u32 {
         '■' => 0xFE,
         '\u{00A0}' => 0xFF,
         _ => '?' as u32,
+    }
+}
+
+#[cfg(test)]
+mod char_offset_test {
+    use super::char_offset_impl;
+
+    #[test]
+    fn test_unique_and_exhaustive() {
+        let mut chars = include_str!("../data/Characters.txt")
+            .lines()
+            .map(|l| l.chars())
+            .flatten()
+            .collect::<Vec<char>>();
+
+        // Replace 2 of the 3 spaces
+        chars[0] = '\u{0000}';
+        let last = chars.len() - 1;
+        chars[last] = '\u{A0}';
+
+        let mut hit = [false; 256];
+
+        for c in chars.into_iter() {
+            let offs = char_offset_impl(c) as usize;
+
+            assert_eq!(false, hit[offs]);
+            hit[offs] = true;
+        }
     }
 }
 
