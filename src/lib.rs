@@ -41,7 +41,7 @@ fn char_offset_impl(c: char) -> u32 {
         '↔' => 0x1D,
         '▲' => 0x1E,
         '▼' => 0x1F,
-        
+
         '⌂' => 0x7F,
         'Ç' => 0x80,
         'ü' => 0x81,
@@ -186,6 +186,8 @@ impl Font for Ibm437Font8x8Normal {
     const FONT_IMAGE: &'static [u8] = include_bytes!("font_8_8_normal.raw");
     const CHARACTER_SIZE: Size = Size::new(8, 8);
     const FONT_IMAGE_WIDTH: u32 = Self::CHARACTER_SIZE.width * CHARS_PER_ROW;
+
+    #[inline]
     fn char_offset(c: char) -> u32 {
         char_offset_impl(c)
     }
@@ -202,6 +204,8 @@ impl Font for Ibm437Font8x8Bold {
     const FONT_IMAGE: &'static [u8] = include_bytes!("font_8_8_bold.raw");
     const CHARACTER_SIZE: Size = Size::new(8, 8);
     const FONT_IMAGE_WIDTH: u32 = Self::CHARACTER_SIZE.width * CHARS_PER_ROW;
+
+    #[inline]
     fn char_offset(c: char) -> u32 {
         char_offset_impl(c)
     }
@@ -218,8 +222,9 @@ impl Font for Ibm437Font9x14Normal {
     const FONT_IMAGE: &'static [u8] = include_bytes!("font_9_14_normal.raw");
     const CHARACTER_SIZE: Size = Size::new(9, 14);
     const FONT_IMAGE_WIDTH: u32 = Self::CHARACTER_SIZE.width * CHARS_PER_ROW;
+
+    #[inline]
     fn char_offset(c: char) -> u32 {
         char_offset_impl(c)
     }
 }
-
