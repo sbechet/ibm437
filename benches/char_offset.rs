@@ -175,94 +175,119 @@ fn char_offset(c: char, base: char) -> u32 {
 
 fn char_offset_impl_remapped(c: char) -> u32 {
     match c {
-        ' '..='~' => c as u32,
+        // keep single byte characters where they are
+        ' '..='~'
+        | '\u{0000}'
+        | '\u{a0}'..='£'
+        | 'ä'..='ï'
+        | 'º'..='½'
+        | 'Ä'..='Ç'
+        | 'ß'..='â'
+        | 'ñ'..='ô'
+        | 'ù'..='ü'
+        | '°'..='²'
+        | 'µ'..='·'
+        | 'ö'..='÷'
+        | '¥'
+        | '§'
+        | '¿'
+        | 'É'
+        | 'Ñ'
+        | 'Ö'
+        | 'Ü'
+        | 'ÿ' => c as u32,
 
-        // 32 characters to fill the space before the basic printables
-        '\u{0000}' => 0x00,
-        '\u{a0}'..='£' => 0x01 + char_offset(c, '\u{a0}'),
-        '¥' => 0x05,
-        '§' => 0x06,
-        'ª'..='¬' => 0x07 + char_offset(c, 'ª'),
-        '°'..='²' => 0x0A + char_offset(c, '°'),
-        'µ'..='·' => 0x0D + char_offset(c, 'µ'),
-        'º'..='½' => 0x10 + char_offset(c, 'º'),
-        '¿' => 0x14,
-        'Ä'..='Ç' => 0x15 + char_offset(c, 'Ä'),
-        'É' => 0x19,
-        'Ñ' => 0x1A,
-        'Ö' => 0x1B,
-        'Ü' => 0x1C,
-        '☺'..='☼' => 0x1D + char_offset(c, '☺'),
+        '═'..='╬' => 0x01 + char_offset(c, '═'), // 29
+        '♪'..='♫' => 0x1E + char_offset(c, '♪'), // 2
 
-        // rest of characters mapped after 0x7F
-        'ß'..='â' => 0x7F + char_offset(c, 'ß'),
-        'ä'..='ï' => 0x83 + char_offset(c, 'ä'),
-        'ñ'..='ô' => 0x8F + char_offset(c, 'ñ'),
-        'ö'..='÷' => 0x93 + char_offset(c, 'ö'),
-        'ù'..='ü' => 0x95 + char_offset(c, 'ù'),
-        'ÿ' => 0x99,
-        'ƒ' => 0x9A,
-        'Γ' => 0x9B,
-        'Θ' => 0x9C,
-        'Σ' => 0x9D,
-        'Φ' => 0x9E,
-        'Ω' => 0x9F,
-        'α' => 0xA0,
-        'δ'..='ε' => 0xA1 + char_offset(c, 'δ'),
-        'π' => 0xA3,
-        'σ'..='τ' => 0xA4 + char_offset(c, 'σ'),
-        'φ' => 0xA6,
-        '•' => 0xA7,
-        '‼' => 0xA8,
-        'ⁿ' => 0xA9,
-        '₧' => 0xAA,
-        '←'..='↕' => 0xAB + char_offset(c, '←'),
-        '↨' => 0xB1,
-        '∙'..='√' => 0xB2 + char_offset(c, '∙'),
-        '∞'..='∟' => 0xB4 + char_offset(c, '∞'),
-        '∩' => 0xB6,
-        '≈' => 0xB7,
-        '≡' => 0xB8,
-        '≤'..='≥' => 0xB9 + char_offset(c, '≤'),
-        '⌂' => 0xBB,
-        '⌐' => 0xBC,
-        '⌠'..='⌡' => 0xBD + char_offset(c, '⌠'),
-        '─' => 0xBF,
-        '│' => 0xC0,
-        '┌' => 0xC1,
-        '┐' => 0xC2,
-        '└' => 0xC3,
-        '┘' => 0xC4,
-        '├' => 0xC5,
-        '┤' => 0xC6,
-        '┬' => 0xC7,
-        '┴' => 0xC8,
-        '┼' => 0xC9,
-        '═'..='╬' => 0xCA + char_offset(c, '═'),
-        '▀' => 0xE7,
-        '▄' => 0xE8,
-        '█' => 0xE9,
-        '▌' => 0xEA, // sports, it's in the game
-        '▐'..='▓' => 0xEB + char_offset(c, '▐'),
-        '■' => 0xEF,
-        '▬' => 0xF0,
-        '▲' => 0xF1,
-        '►' => 0xF2,
-        '▼' => 0xF3,
-        '◄' => 0xF4,
-        '○' => 0xF5,
-        '◘'..='◙' => 0xF6 + char_offset(c, '◘'),
-        '♀' => 0xF8,
-        '♂' => 0xF9,
-        '♠' => 0xFA,
-        '♣' => 0xFB,
-        '♥'..='♦' => 0xFC + char_offset(c, '♥'),
-        '♪'..='♫' => 0xFE + char_offset(c, '♪'),
+        // gap between ~ and A0
+        '←'..='↕' => 0x7F + char_offset(c, '←'), // 6
+        '▐'..='▓' => 0x85 + char_offset(c, '▐'), // 4
+        'ª'..='¬' => 0x89 + char_offset(c, 'ª'),    // 3
+        '☺'..='☼' => 0x8C + char_offset(c, '☺'), // 3
+        'δ'..='ε' => 0x8F + char_offset(c, 'δ'),    // 2
+        '∙'..='√' => 0x91 + char_offset(c, '∙'), // 2
+        '∞'..='∟' => 0x93 + char_offset(c, '∞'), // 2
+        '≤'..='≥' => 0x95 + char_offset(c, '≤'), // 2
+        '⌠'..='⌡' => 0x97 + char_offset(c, '⌠'), // 2
+        '◘'..='◙' => 0x99 + char_offset(c, '◘'), // 2
+        '♥'..='♦' => 0x9B + char_offset(c, '♥'), // 2
+        'σ'..='τ' => 0x9D + char_offset(c, 'σ'),    // 2
+        'ƒ' => 0x9F,
+
+        'Γ' => 0xA4,
+        'Θ' => 0xA6,
+        'Σ' => 0xA8,
+        'Φ' => 0xA9,
+        'Ω' => 0xAA,
+        'α' => 0xAB,
+        'π' => 0xAC,
+        'φ' => 0xAD,
+        '•' => 0xAE,
+        '‼' => 0xAF,
+        'ⁿ' => 0xB3,
+        '₧' => 0xB4,
+        '↨' => 0xB8,
+        '∩' => 0xB9,
+        '≈' => 0xBE,
+        '≡' => 0xC0,
+        '⌂' => 0xC1,
+        '⌐' => 0xC2,
+        '─' => 0xC3,
+        '│' => 0xC8,
+        '┌' => 0xCA,
+        '┐' => 0xCB,
+        '└' => 0xCC,
+        '┘' => 0xCD,
+        '├' => 0xCE,
+        '┤' => 0xCF,
+        '┬' => 0xD0,
+        '┴' => 0xD2,
+        '┼' => 0xD3,
+        '▀' => 0xD4,
+        '▄' => 0xD5,
+        '█' => 0xD7,
+        '▌' => 0xD8,
+        '■' => 0xD9,
+        '▬' => 0xDA,
+        '▲' => 0xDB,
+        '►' => 0xDD,
+        '▼' => 0xDE,
+        '◄' => 0xE3,
+        '○' => 0xF0,
+        '♀' => 0xF5,
+        '♂' => 0xF8,
+        '♠' => 0xFD,
+        '♣' => 0xFE,
         _ => '?' as u32,
     }
 }
 
-fn benchmark_original(c: &mut Criterion) {
+fn benchmark_original_ascii(c: &mut Criterion) {
+    let chars = "The quick brown fox jumps over the lazy dog".chars();
+
+    c.bench_function("Original mapping, ASCII characters", |b| {
+        b.iter(|| {
+            for c in chars.clone() {
+                let _ = char_offset_impl_original(black_box(c));
+            }
+        })
+    });
+}
+
+fn benchmark_current_ascii(c: &mut Criterion) {
+    let chars = "The quick brown fox jumps over the lazy dog".chars();
+
+    c.bench_function("Remapped, ASCII characters", |b| {
+        b.iter(|| {
+            for c in chars.clone() {
+                let _ = char_offset_impl_remapped(black_box(c));
+            }
+        })
+    });
+}
+
+fn benchmark_original_all_chars(c: &mut Criterion) {
     let chars = include_str!("../data/Characters.txt")
         .lines()
         .map(|l| l.chars())
@@ -278,7 +303,7 @@ fn benchmark_original(c: &mut Criterion) {
     });
 }
 
-fn benchmark_current(c: &mut Criterion) {
+fn benchmark_current_all_chars(c: &mut Criterion) {
     let chars = include_str!("../data/Characters.txt")
         .lines()
         .map(|l| l.chars())
@@ -294,5 +319,11 @@ fn benchmark_current(c: &mut Criterion) {
     });
 }
 
-criterion_group!(char_offset_bench, benchmark_original, benchmark_current);
+criterion_group!(
+    char_offset_bench,
+    benchmark_original_ascii,
+    benchmark_current_ascii,
+    benchmark_original_all_chars,
+    benchmark_current_all_chars
+);
 criterion_main!(char_offset_bench);
