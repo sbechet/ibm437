@@ -19,6 +19,51 @@ fn save_image(filename: &str, image: &Vec<u8>, width: u32, height: u32) -> std::
     Ok(())
 }
 
+fn create_char_mapping() {
+    let mut chars = include_str!("../Characters.txt")
+        .lines()
+        .map(|l| l.chars())
+        .flatten()
+        .collect::<Vec<char>>();
+
+    // Replace 2 of the 3 spaces
+    chars[0] = '\u{0000}';
+    let last = chars.len() - 1;
+    chars[last] = '\u{A0}';
+
+    chars.sort();
+
+    let mut iter = chars.into_iter();
+    while let Some(start) = iter.next() {
+        let mut lookahead = iter.clone();
+        let mut prev = start;
+        let last_consecutive = loop {
+            if let Some(maybe_end) = lookahead.next() {
+                if maybe_end as u32 - prev as u32 == 1 {
+                    // advance
+                    prev = maybe_end;
+                    iter = lookahead.clone();
+                } else {
+                    break prev;
+                }
+            } else {
+                break prev;
+            }
+        };
+
+        if start == last_consecutive {
+            println!("{:?} => 0,", start);
+        } else {
+            println!(
+                "{:?} ..= {:?} => {},",
+                start,
+                last_consecutive,
+                last_consecutive as u32 - start as u32 + 1
+            );
+        }
+    }
+}
+
 fn main() -> std::io::Result<()> {
     let mut file_content = Vec::with_capacity(8192);
 
