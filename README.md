@@ -4,6 +4,8 @@ The [IBM437](https://en.wikipedia.org/wiki/Code_page_437) font for uses with the
 
 The font comes from the MK36000 chip component of a Monochrome Display Adapter card (MDA/CGA)
 
+Warning: these fonts are probably still the property of IBM? I don't know if they are in the public domain. Does anyone know anything about it?
+
 ## Specimens
 
 IBM437 is available in 3 sizes:
