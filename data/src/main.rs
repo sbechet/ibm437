@@ -72,7 +72,7 @@ fn main() -> std::io::Result<()> {
     // Since we have to replace 2 spaces anyway, let's not bother with include_str!
     let source = "\u{0}☺☻♥♦♣♠•◘○◙♂♀♪♫☼\
                   ►◄↕‼¶§▬↨↑↓→←∟↔▲▼\
-                  !\"#$%&'()*+,-./\
+                  !\"#$%&'()*+,-./ \
                   0123456789:;<=>?\
                   @ABCDEFGHIJKLMNO\
                   PQRSTUVWXYZ[\\]^_\
