@@ -94,7 +94,7 @@ fn main() -> std::io::Result<()> {
     // #######################################################################
     // First font 8x14 (MDA)
     let mut image: Vec<u8> = Vec::with_capacity(8 * 14 * 2);
-    for i in 0..256 {
+    for i in 0..source.chars().count() {
         let c = source.chars().nth(i).unwrap();
         let top = &file_content[8 * i..8 * (i + 1)];
         let bottom = &file_content[0x0800 + 8 * i..0x0800 + 8 * (i + 1) - 2];
@@ -118,7 +118,7 @@ fn main() -> std::io::Result<()> {
     // #######################################################################
     // Second font 8x8 (CGA)
     let mut image: Vec<u8> = Vec::with_capacity(8 * 8);
-    for i in 0..256 {
+    for i in 0..source.chars().count() {
         let c = source.chars().nth(i).unwrap();
         let elem = &file_content[0x1000 + 8 * i..0x1000 + 8 * (i + 1)];
 
@@ -134,7 +134,7 @@ fn main() -> std::io::Result<()> {
     // #######################################################################
     // Third font 8x8 (CGA)
     let mut image: Vec<u8> = Vec::with_capacity(8 * 8);
-    for i in 0..256 {
+    for i in 0..source.chars().count() {
         let c = source.chars().nth(i).unwrap();
         let elem = &file_content[0x1800 + 8 * i..0x1800 + 8 * (i + 1)];
 
