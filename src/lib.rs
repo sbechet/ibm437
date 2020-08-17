@@ -195,3 +195,70 @@ impl Font for Ibm437Font9x14Normal {
         char_offset_impl(c)
     }
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+    use embedded_graphics::{
+        fonts::Text,
+        mock_display::MockDisplay,
+        pixelcolor::BinaryColor,
+        prelude::*,
+        style::{TextStyle, TextStyleBuilder},
+    };
+
+    #[test]
+    fn test_a() {
+        let mut display = MockDisplay::new();
+
+        assert_eq!(Ibm437Font8x8Normal::char_offset('a'), 'a' as u32);
+
+        let style = TextStyle::new(Ibm437Font8x8Normal, BinaryColor::On);
+        Text::new("a", Point::zero())
+            .into_styled(style)
+            .draw(&mut display)
+            .unwrap();
+        assert_eq!(
+            display,
+            MockDisplay::from_pattern(&[
+                "            ",
+                "            ",
+                "  ####      ",
+                "      #     ",
+                "  #####     ",
+                " #    #     ",
+                "  ######    ",
+                "            ",
+            ])
+        );
+    }
+
+    #[test]
+    fn test_nbsp() {
+        let mut display = MockDisplay::new();
+
+        assert_eq!(Ibm437Font8x8Normal::char_offset('\u{A0}'), '\u{A0}' as u32);
+
+        let style = TextStyleBuilder::new(Ibm437Font8x8Normal)
+            .text_color(BinaryColor::On)
+            .background_color(BinaryColor::Off)
+            .build();
+        Text::new("\u{A0}", Point::zero())
+            .into_styled(style)
+            .draw(&mut display)
+            .unwrap();
+        assert_eq!(
+            display,
+            MockDisplay::from_pattern(&[
+                "........     ",
+                "........     ",
+                "........     ",
+                "........     ",
+                "........     ",
+                "........     ",
+                "........     ",
+                "........     ",
+            ])
+        );
+    }
+}
