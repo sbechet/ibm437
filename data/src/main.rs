@@ -3,6 +3,7 @@ use std::io::prelude::*;
 use std::io::BufWriter;
 use std::path::Path;
 
+use ibm437::char_offset_impl;
 use png;
 
 fn save_image(filename: &str, image: &Vec<u8>, width: u32, height: u32) -> std::io::Result<()> {
@@ -67,6 +68,24 @@ fn create_char_mapping() {
 fn main() -> std::io::Result<()> {
     let mut file_content = Vec::with_capacity(8192);
 
+    // Since we have to replace 2 spaces anyway, let's not bother with include_str!
+    let source = "\u{0}☺☻♥♦♣♠•◘○◙♂♀♪♫☼\
+                  ►◄↕‼¶§▬↨↑↓→←∟↔▲▼\
+                  !\"#$%&'()*+,-./\
+                  0123456789:;<=>?\
+                  @ABCDEFGHIJKLMNO\
+                  PQRSTUVWXYZ[\\]^_\
+                  `abcdefghijklmno\
+                  pqrstuvwxyz{|}~⌂\
+                  ÇüéâäàåçêëèïîìÄÅ\
+                  ÉæÆôöòûùÿÖÜ¢£¥₧ƒ\
+                  áíóúñÑªº¿⌐¬½¼¡«»\
+                  ░▒▓│┤╡╢╖╕╣║╗╝╜╛┐\
+                  └┴┬├─┼╞╟╚╔╩╦╠═╬╧\
+                  ╨╤╥╙╘╒╓╫╪┘┌█▄▌▐▀\
+                  αßΓπΣσµτΦΘΩδ∞φε∩\
+                  ≡±≥≤⌠⌡÷≈°∙·√ⁿ²■\u{A0}";
+
     {
         let mut f = File::open("IBM_5788005_AM9264_1981_CGA_MDA_CARD.BIN")?;
         f.read_to_end(&mut file_content)?;
@@ -76,6 +95,7 @@ fn main() -> std::io::Result<()> {
     // First font 8x14 (MDA)
     let mut image: Vec<u8> = Vec::with_capacity(8 * 14 * 2);
     for i in 0..256 {
+        let c = source.chars().nth(i).unwrap();
         let top = &file_content[8 * i..8 * (i + 1)];
         let bottom = &file_content[0x0800 + 8 * i..0x0800 + 8 * (i + 1) - 2];
 
@@ -90,7 +110,7 @@ fn main() -> std::io::Result<()> {
             image.push(*e);
             image.push(c);
         }
-        let filename = format!("/tmp/font_9_14_normal_{:02x}.png", i);
+        let filename = format!("/tmp/font_9_14_normal_{:02x}.png", char_offset_impl(c));
         save_image(&filename, &image, 9, 14)?;
         image.clear();
     }
@@ -99,13 +119,14 @@ fn main() -> std::io::Result<()> {
     // Second font 8x8 (CGA)
     let mut image: Vec<u8> = Vec::with_capacity(8 * 8);
     for i in 0..256 {
+        let c = source.chars().nth(i).unwrap();
         let elem = &file_content[0x1000 + 8 * i..0x1000 + 8 * (i + 1)];
 
         for e in elem {
             image.push(*e);
         }
 
-        let filename = format!("/tmp/font_8_8_normal_{:02x}.png", i);
+        let filename = format!("/tmp/font_8_8_normal_{:02x}.png", char_offset_impl(c));
         save_image(&filename, &image, 8, 8)?;
         image.clear();
     }
@@ -114,13 +135,14 @@ fn main() -> std::io::Result<()> {
     // Third font 8x8 (CGA)
     let mut image: Vec<u8> = Vec::with_capacity(8 * 8);
     for i in 0..256 {
+        let c = source.chars().nth(i).unwrap();
         let elem = &file_content[0x1800 + 8 * i..0x1800 + 8 * (i + 1)];
 
         for e in elem {
             image.push(*e);
         }
 
-        let filename = format!("/tmp/font_8_8_bold_{:02x}.png", i);
+        let filename = format!("/tmp/font_8_8_bold_{:02x}.png", char_offset_impl(c));
         save_image(&filename, &image, 8, 8)?;
         image.clear();
     }
