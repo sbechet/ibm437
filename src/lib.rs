@@ -10,8 +10,7 @@ fn char_offset(c: char, base: char) -> u32 {
     c as u32 - base as u32
 }
 
-#[doc(hidden)]
-pub fn char_offset_impl(c: char) -> u32 {
+fn char_offset_impl(c: char) -> u32 {
     match c {
         // keep single byte characters where they are
         ' '..='~'

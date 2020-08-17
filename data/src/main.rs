@@ -3,7 +3,8 @@ use std::io::prelude::*;
 use std::io::BufWriter;
 use std::path::Path;
 
-use ibm437::char_offset_impl;
+use ibm437::*;
+use embedded_graphics::fonts::Font;
 use png;
 
 fn save_image(filename: &str, image: &Vec<u8>, width: u32, height: u32) -> std::io::Result<()> {
@@ -110,7 +111,7 @@ fn main() -> std::io::Result<()> {
             image.push(*e);
             image.push(c);
         }
-        let filename = format!("/tmp/font_9_14_normal_{:02x}.png", char_offset_impl(c));
+        let filename = format!("/tmp/font_9_14_normal_{:02x}.png", Ibm437Font9x14Normal::char_offset(c));
         save_image(&filename, &image, 9, 14)?;
         image.clear();
     }
@@ -126,7 +127,7 @@ fn main() -> std::io::Result<()> {
             image.push(*e);
         }
 
-        let filename = format!("/tmp/font_8_8_normal_{:02x}.png", char_offset_impl(c));
+        let filename = format!("/tmp/font_8_8_normal_{:02x}.png", Ibm437Font8x8Normal::char_offset(c));
         save_image(&filename, &image, 8, 8)?;
         image.clear();
     }
@@ -142,7 +143,7 @@ fn main() -> std::io::Result<()> {
             image.push(*e);
         }
 
-        let filename = format!("/tmp/font_8_8_bold_{:02x}.png", char_offset_impl(c));
+        let filename = format!("/tmp/font_8_8_bold_{:02x}.png", Ibm437Font8x8Bold::char_offset(c));
         save_image(&filename, &image, 8, 8)?;
         image.clear();
     }
