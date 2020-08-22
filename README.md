@@ -4,7 +4,7 @@ The [IBM437](https://en.wikipedia.org/wiki/Code_page_437) font for uses with the
 
 The font comes from the AM9264 chip component of a Monochrome Display Adapter card (MDA/CGA)
 
-Offset glyphs have been changed to optimize the UTF-8 default rust encoding.
+Offset glyphs have been changed to optimize the [UTF-8 default](https://raw.githubusercontent.com/sbechet/ibm437/master/data/Characters.txt) rust encoding.
 
 Warning: these IBM fonts are probably public domain today. Does anyone know anything about it?
 
