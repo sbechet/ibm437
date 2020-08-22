@@ -8,3 +8,5 @@ edition = "2018"
 
 [dependencies]
 png = "0.16.7"
+ibm437 = { path = "../" }
+embedded-graphics = "0.6"
