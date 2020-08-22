@@ -2,9 +2,11 @@
 
 The [IBM437](https://en.wikipedia.org/wiki/Code_page_437) font for uses with the [embedded-graphics](https://crates.io/crates/embedded-graphics) crate.
 
-The font comes from the MK36000 chip component of a Monochrome Display Adapter card (MDA/CGA)
+The font comes from the AM9264 chip component of a Monochrome Display Adapter card (MDA/CGA)
 
-Warning: these fonts are probably still the property of IBM? I don't know if they are in the public domain. Does anyone know anything about it?
+Offset glyphs have been changed to optimize the UTF-8 default rust encoding.
+
+Warning: these IBM fonts are probably public domain today. Does anyone know anything about it?
 
 ## Specimens
 

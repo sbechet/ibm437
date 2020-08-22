@@ -1,7 +1,7 @@
 [package]
 name = "ibm437"
 description = "The IBM437 font for uses with the embedded-graphics crate."
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Sebastien Bechet <sebastien.bechet@osinix.com>"]
 edition = "2018"
 
@@ -24,7 +24,3 @@ embedded-graphics = "0.6"
 [dev-dependencies]
 criterion = "0.3.3"
 
-# Setting these prevents Cargo from trying to test or bench the crate
-[ibm437]
-test = false
-bench = false
