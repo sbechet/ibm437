@@ -261,4 +261,33 @@ mod test {
             ])
         );
     }
+
+    #[test]
+    fn test_space() {
+        let mut display = MockDisplay::new();
+
+        assert_eq!(Ibm437Font8x8Normal::char_offset(' '), ' ' as u32);
+
+        let style = TextStyleBuilder::new(Ibm437Font8x8Normal)
+            .text_color(BinaryColor::On)
+            .background_color(BinaryColor::Off)
+            .build();
+        Text::new(" ", Point::zero())
+            .into_styled(style)
+            .draw(&mut display)
+            .unwrap();
+        assert_eq!(
+            display,
+            MockDisplay::from_pattern(&[
+                "........     ",
+                "........     ",
+                "........     ",
+                "........     ",
+                "........     ",
+                "........     ",
+                "........     ",
+                "........     ",
+            ])
+        );
+    }
 }
