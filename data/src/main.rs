@@ -4,7 +4,6 @@ use std::io::BufWriter;
 use std::path::Path;
 
 use ibm437::*;
-use embedded_graphics::fonts::Font;
 use png;
 
 fn save_image(filename: &str, image: &Vec<u8>, width: u32, height: u32) -> std::io::Result<()> {
@@ -19,51 +18,6 @@ fn save_image(filename: &str, image: &Vec<u8>, width: u32, height: u32) -> std::
     writer.write_image_data(&image)?;
 
     Ok(())
-}
-
-fn create_char_mapping() {
-    let mut chars = include_str!("../Characters.txt")
-        .lines()
-        .map(|l| l.chars())
-        .flatten()
-        .collect::<Vec<char>>();
-
-    // Replace 2 of the 3 spaces
-    chars[0] = '\u{0000}';
-    let last = chars.len() - 1;
-    chars[last] = '\u{A0}';
-
-    chars.sort();
-
-    let mut iter = chars.into_iter();
-    while let Some(start) = iter.next() {
-        let mut lookahead = iter.clone();
-        let mut prev = start;
-        let last_consecutive = loop {
-            if let Some(maybe_end) = lookahead.next() {
-                if maybe_end as u32 - prev as u32 == 1 {
-                    // advance
-                    prev = maybe_end;
-                    iter = lookahead.clone();
-                } else {
-                    break prev;
-                }
-            } else {
-                break prev;
-            }
-        };
-
-        if start == last_consecutive {
-            println!("{:?} => 0,", start);
-        } else {
-            println!(
-                "{:?} ..= {:?} => {},",
-                start,
-                last_consecutive,
-                last_consecutive as u32 - start as u32 + 1
-            );
-        }
-    }
 }
 
 fn main() -> std::io::Result<()> {
@@ -110,7 +64,10 @@ fn main() -> std::io::Result<()> {
             image.push(*e);
             image.push(c);
         }
-        let filename = format!("/tmp/font_9_14_normal_{:02x}.png", Ibm437Font9x14Normal::char_offset(chr));
+        let filename = format!(
+            "/tmp/font_9_14_normal_{:02x}.png",
+            IBM437_8X8_NORMAL.glyph_mapping.index(chr)
+        );
         save_image(&filename, &image, 9, 14)?;
         image.clear();
     }
@@ -125,7 +82,10 @@ fn main() -> std::io::Result<()> {
             image.push(*e);
         }
 
-        let filename = format!("/tmp/font_8_8_normal_{:02x}.png", Ibm437Font8x8Normal::char_offset(chr));
+        let filename = format!(
+            "/tmp/font_8_8_normal_{:02x}.png",
+            IBM437_8X8_BOLD.glyph_mapping.index(chr)
+        );
         save_image(&filename, &image, 8, 8)?;
         image.clear();
     }
@@ -140,7 +100,10 @@ fn main() -> std::io::Result<()> {
             image.push(*e);
         }
 
-        let filename = format!("/tmp/font_8_8_bold_{:02x}.png", Ibm437Font8x8Bold::char_offset(chr));
+        let filename = format!(
+            "/tmp/font_8_8_bold_{:02x}.png",
+            IBM437_9X14_NORMAL.glyph_mapping.index(chr)
+        );
         save_image(&filename, &image, 8, 8)?;
         image.clear();
     }
