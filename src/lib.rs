@@ -2,15 +2,19 @@
 
 extern crate embedded_graphics;
 
-use embedded_graphics::{fonts::Font, geometry::Size};
+use embedded_graphics::{
+    geometry::Size,
+    image::ImageRaw,
+    mono_font::{DecorationDimensions, MonoFont},
+};
 
 const CHARS_PER_ROW: u32 = 16;
 
-fn char_offset(c: char, base: char) -> u32 {
-    c as u32 - base as u32
+fn char_offset(c: char, base: char) -> usize {
+    c as usize - base as usize
 }
 
-fn char_offset_impl(c: char) -> u32 {
+fn char_offset_impl(c: char) -> usize {
     match c {
         // keep single byte characters where they are
         ' '..='~'
@@ -32,7 +36,7 @@ fn char_offset_impl(c: char) -> u32 {
         | 'Ñ'
         | 'Ö'
         | 'Ü'
-        | 'ÿ' => c as u32,
+        | 'ÿ' => c as usize,
 
         '═'..='╬' => 0x01 + char_offset(c, '═'), // 29
         '♪'..='♫' => 0x1E + char_offset(c, '♪'), // 2
@@ -96,7 +100,7 @@ fn char_offset_impl(c: char) -> u32 {
         '♂' => 0xF8,
         '♠' => 0xFD,
         '♣' => 0xFE,
-        _ => '?' as u32,
+        _ => '?' as usize,
     }
 }
 
@@ -146,78 +150,67 @@ mod char_offset_test {
 ///
 /// [![8x8 normal font spritemap screenshot](https://raw.githubusercontent.com/sbechet/ibm437/master/data/font_8_8_normal.png)](https://raw.githubusercontent.com/sbechet/ibm437/master/data/font_8_8_normal.png)
 ///
-#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug, Default)]
-pub struct Ibm437Font8x8Normal;
-
-impl Font for Ibm437Font8x8Normal {
-    const FONT_IMAGE: &'static [u8] = include_bytes!("font_8_8_normal.raw");
-    const CHARACTER_SIZE: Size = Size::new(8, 8);
-    const FONT_IMAGE_WIDTH: u32 = Self::CHARACTER_SIZE.width * CHARS_PER_ROW;
-
-    #[inline]
-    fn char_offset(c: char) -> u32 {
-        char_offset_impl(c)
-    }
-}
+pub const IBM437_8X8_NORMAL: MonoFont = MonoFont {
+    image: ImageRaw::new_binary(include_bytes!("font_8_8_normal.raw"), CHARS_PER_ROW * 8),
+    glyph_mapping: &char_offset_impl,
+    character_size: Size::new(8, 8),
+    character_spacing: 0,
+    baseline: 6,
+    underline: DecorationDimensions::new(8, 1),
+    strikethrough: DecorationDimensions::default_strikethrough(8),
+};
 
 /// The 8x8 bold
 ///
 /// [![8x8 bold font spritemap screenshot](https://raw.githubusercontent.com/sbechet/ibm437/master/data/font_8_8_bold.png)](https://raw.githubusercontent.com/sbechet/ibm437/master/data/font_8_8_bold.png)
 ///
-#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug, Default)]
-pub struct Ibm437Font8x8Bold;
-
-impl Font for Ibm437Font8x8Bold {
-    const FONT_IMAGE: &'static [u8] = include_bytes!("font_8_8_bold.raw");
-    const CHARACTER_SIZE: Size = Size::new(8, 8);
-    const FONT_IMAGE_WIDTH: u32 = Self::CHARACTER_SIZE.width * CHARS_PER_ROW;
-
-    #[inline]
-    fn char_offset(c: char) -> u32 {
-        char_offset_impl(c)
-    }
-}
+pub const IBM437_8X8_BOLD: MonoFont = MonoFont {
+    image: ImageRaw::new_binary(include_bytes!("font_8_8_bold.raw"), CHARS_PER_ROW * 8),
+    glyph_mapping: &char_offset_impl,
+    character_size: Size::new(8, 8),
+    character_spacing: 0,
+    baseline: 6,
+    underline: DecorationDimensions::new(8, 1),
+    strikethrough: DecorationDimensions::default_strikethrough(8),
+};
 
 /// The 9x14 normal
 ///
 /// [![9x14 normal font spritemap screenshot](https://raw.githubusercontent.com/sbechet/ibm437/master/data/font_9_14_normal.png)](https://raw.githubusercontent.com/sbechet/ibm437/master/data/font_9_14_normal.png)
 ///
-#[derive(Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug, Default)]
-pub struct Ibm437Font9x14Normal;
-
-impl Font for Ibm437Font9x14Normal {
-    const FONT_IMAGE: &'static [u8] = include_bytes!("font_9_14_normal.raw");
-    const CHARACTER_SIZE: Size = Size::new(9, 14);
-    const FONT_IMAGE_WIDTH: u32 = Self::CHARACTER_SIZE.width * CHARS_PER_ROW;
-
-    #[inline]
-    fn char_offset(c: char) -> u32 {
-        char_offset_impl(c)
-    }
-}
+pub const IBM437_9X14_NORMAL: MonoFont = MonoFont {
+    image: ImageRaw::new_binary(include_bytes!("font_9_14_normal.raw"), CHARS_PER_ROW * 9),
+    glyph_mapping: &char_offset_impl,
+    character_size: Size::new(9, 14),
+    character_spacing: 0,
+    baseline: 10,
+    underline: DecorationDimensions::new(14, 1),
+    strikethrough: DecorationDimensions::default_strikethrough(14),
+};
 
 #[cfg(test)]
 mod test {
     use super::*;
     use embedded_graphics::{
-        fonts::Text,
         mock_display::MockDisplay,
+        mono_font::{MonoTextStyle, MonoTextStyleBuilder},
         pixelcolor::BinaryColor,
         prelude::*,
-        style::{TextStyle, TextStyleBuilder},
+        text::Text,
     };
 
     #[test]
     fn test_a() {
         let mut display = MockDisplay::new();
 
-        assert_eq!(Ibm437Font8x8Normal::char_offset('a'), 'a' as u32);
+        assert_eq!(char_offset_impl('a'), 'a' as usize);
 
-        let style = TextStyle::new(Ibm437Font8x8Normal, BinaryColor::On);
-        Text::new("a", Point::zero())
-            .into_styled(style)
+        let style = MonoTextStyle::new(&IBM437_8X8_NORMAL, BinaryColor::On);
+
+        Text::new("a", Point::new(0, 6), style)
             .draw(&mut display)
             .unwrap();
+
         assert_eq!(
             display,
             MockDisplay::from_pattern(&[
@@ -237,16 +230,18 @@ mod test {
     fn test_nbsp() {
         let mut display = MockDisplay::new();
 
-        assert_eq!(Ibm437Font8x8Normal::char_offset('\u{A0}'), '\u{A0}' as u32);
+        assert_eq!(char_offset_impl('\u{A0}'), '\u{A0}' as usize);
 
-        let style = TextStyleBuilder::new(Ibm437Font8x8Normal)
+        let style = MonoTextStyleBuilder::new()
+            .font(&IBM437_8X8_NORMAL)
             .text_color(BinaryColor::On)
             .background_color(BinaryColor::Off)
             .build();
-        Text::new("\u{A0}", Point::zero())
-            .into_styled(style)
+
+        Text::new("\u{A0}", Point::new(0, 6), style)
             .draw(&mut display)
             .unwrap();
+
         assert_eq!(
             display,
             MockDisplay::from_pattern(&[
@@ -266,16 +261,18 @@ mod test {
     fn test_space() {
         let mut display = MockDisplay::new();
 
-        assert_eq!(Ibm437Font8x8Normal::char_offset(' '), ' ' as u32);
+        assert_eq!(char_offset_impl(' '), ' ' as usize);
 
-        let style = TextStyleBuilder::new(Ibm437Font8x8Normal)
+        let style = MonoTextStyleBuilder::new()
+            .font(&IBM437_8X8_NORMAL)
             .text_color(BinaryColor::On)
             .background_color(BinaryColor::Off)
             .build();
-        Text::new(" ", Point::zero())
-            .into_styled(style)
+
+        Text::new(" ", Point::new(0, 6), style)
             .draw(&mut display)
             .unwrap();
+
         assert_eq!(
             display,
             MockDisplay::from_pattern(&[
