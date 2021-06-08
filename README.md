@@ -6,8 +6,6 @@ The font comes from the AM9264 chip component of a Monochrome Display Adapter ca
 
 Offset glyphs have been changed to optimize the [UTF-8 default](https://raw.githubusercontent.com/sbechet/ibm437/master/data/Characters.txt) rust encoding.
 
-Warning: these IBM fonts are probably public domain today. Does anyone know anything about it?
-
 ## Specimens
 
 IBM437 is available in 3 sizes:
