@@ -334,7 +334,7 @@ dependencies = [
 
 [[package]]
 name = "ibm437"
-version = "0.1.3"
+version = "0.1.4"
 dependencies = [
  "criterion",
  "embedded-graphics",
