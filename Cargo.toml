@@ -19,8 +19,9 @@ name = "char_offset"
 harness = false
 
 [dependencies]
-embedded-graphics = "0.6"
+embedded-graphics = "0.7"
 
 [dev-dependencies]
 criterion = "0.3.3"
+embedded-graphics-simulator = "0.3.0"
 
