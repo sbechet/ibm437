@@ -17,7 +17,7 @@ use char_offset::{char_offset_impl, CHARS_PER_ROW};
 ///
 pub const IBM437_8X8_REGULAR: MonoFont = MonoFont {
     image: ImageRaw::new_binary(
-        include_bytes!("../target/ibm437_font_8_8_regular.raw"),
+        include_bytes!("../doc/ibm437_font_8_8_regular.raw"),
         CHARS_PER_ROW as u32 * 8,
     ),
     glyph_mapping: &char_offset_impl,
@@ -34,7 +34,7 @@ pub const IBM437_8X8_REGULAR: MonoFont = MonoFont {
 ///
 pub const IBM437_8X8_BOLD: MonoFont = MonoFont {
     image: ImageRaw::new_binary(
-        include_bytes!("../target/ibm437_font_8_8_bold.raw"),
+        include_bytes!("../doc/ibm437_font_8_8_bold.raw"),
         CHARS_PER_ROW as u32 * 8,
     ),
     glyph_mapping: &char_offset_impl,
@@ -51,7 +51,7 @@ pub const IBM437_8X8_BOLD: MonoFont = MonoFont {
 ///
 pub const IBM437_9X14_REGULAR: MonoFont = MonoFont {
     image: ImageRaw::new_binary(
-        include_bytes!("../target/ibm437_font_9_14_regular.raw"),
+        include_bytes!("../doc/ibm437_font_9_14_regular.raw"),
         CHARS_PER_ROW as u32 * 9,
     ),
     glyph_mapping: &char_offset_impl,

@@ -1,4 +1,4 @@
-use std::fs::{ create_dir_all, File };
+use std::fs::File;
 use std::io::prelude::*;
 use std::path::Path;
 
@@ -91,7 +91,7 @@ fn extract_9x14(characters: &Vec<char>, ibm437_src: &[u8; 8192]) -> std::io::Res
             INPUT_HEIGHT_LEN,
         );
     }
-    save_9_14("target/ibm437_font_9_14_regular.raw", &font_output)?;
+    save_9_14("doc/ibm437_font_9_14_regular.raw", &font_output)?;
     Ok(())
 }
 
@@ -158,7 +158,7 @@ fn extract_8x8_regular(characters: &Vec<char>, ibm437_src: &[u8; 8192]) -> std::
         );
     }
 
-    save_raw("target/ibm437_font_8_8_regular.raw", &font_output)?;
+    save_raw("doc/ibm437_font_8_8_regular.raw", &font_output)?;
     save_png(
         "doc/ibm437_font_8_8_regular.png",
         &font_output,
@@ -192,7 +192,7 @@ fn extract_8x8_bold(characters: &Vec<char>, ibm437_src: &[u8; 8192]) -> std::io:
         );
     }
 
-    save_raw("target/ibm437_font_8_8_bold.raw", &font_output)?;
+    save_raw("doc/ibm437_font_8_8_bold.raw", &font_output)?;
     save_png(
         "doc/ibm437_font_8_8_bold.png",
         &font_output,
@@ -232,9 +232,6 @@ fn main() -> std::io::Result<()> {
         .map(|l| l.chars())
         .flatten()
         .collect::<Vec<char>>();
-
-    // helper for https://docs.rs because other target path
-    create_dir_all(Path::new("target"))?;
 
     extract_9x14(&characters, IBM437_SRC)?;
     extract_8x8_regular(&characters, IBM437_SRC)?;
