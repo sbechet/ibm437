@@ -1,9 +1,10 @@
 [package]
 name = "ibm437"
 description = "The IBM437 font for uses with the embedded-graphics crate."
-version = "0.1.4"
-authors = ["Sebastien Bechet <sebastien.bechet@osinix.com>"]
-edition = "2018"
+version = "0.2.0"
+authors = ["Sebastien Bechet <sebastien.bechet@free.fr>"]
+edition = "2021"
+build = "src/build.rs"
 
 documentation = "https://docs.rs/ibm437"
 repository = "https://github.com/sbechet/ibm437"
@@ -15,13 +16,17 @@ keywords = ["bitmap", "monochrome", "font", "monospace"]
 categories = ["rendering", "embedded", "no-std"]
 
 [[bench]]
-name = "char_offset"
+name = "bench_mapping"
 harness = false
+
+[build-dependencies]
+bitvec = "0.22"
+png = "0.17"
 
 [dependencies]
 embedded-graphics = "0.7"
 
 [dev-dependencies]
-criterion = "0.3.3"
-embedded-graphics-simulator = "0.3.0"
+criterion = "0.3"
+embedded-graphics-simulator = "0.3"
 

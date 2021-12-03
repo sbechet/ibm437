@@ -1,8 +1,12 @@
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
-pub fn char_offset_impl_original(c: char) -> u32 {
+#[path = "../src/char_offset.rs"]
+mod char_offset;
+use char_offset::char_offset_impl;
+
+pub fn char_offset_impl_original(c: char) -> usize {
     match c {
-        ' '..='~' => c as u32,
+        ' '..='~' => c as usize,
         '\u{0000}' => 0x00,
         '☺' => 0x01,
         '☻' => 0x02,
@@ -165,101 +169,7 @@ pub fn char_offset_impl_original(c: char) -> u32 {
         '²' => 0xFD,
         '■' => 0xFE,
         '\u{00A0}' => 0xFF,
-        _ => '?' as u32,
-    }
-}
-
-fn char_offset(c: char, base: char) -> u32 {
-    c as u32 - base as u32
-}
-
-fn char_offset_impl_remapped(c: char) -> u32 {
-    match c {
-        // keep single byte characters where they are
-        ' '..='~'
-        | '\u{0000}'
-        | '\u{a0}'..='£'
-        | 'ä'..='ï'
-        | 'º'..='½'
-        | 'Ä'..='Ç'
-        | 'ß'..='â'
-        | 'ñ'..='ô'
-        | 'ù'..='ü'
-        | '°'..='²'
-        | 'µ'..='·'
-        | 'ö'..='÷'
-        | '¥'
-        | '§'
-        | '¿'
-        | 'É'
-        | 'Ñ'
-        | 'Ö'
-        | 'Ü'
-        | 'ÿ' => c as u32,
-
-        '═'..='╬' => 0x01 + char_offset(c, '═'), // 29
-        '♪'..='♫' => 0x1E + char_offset(c, '♪'), // 2
-
-        // gap between ~ and A0
-        '←'..='↕' => 0x7F + char_offset(c, '←'), // 6
-        '▐'..='▓' => 0x85 + char_offset(c, '▐'), // 4
-        'ª'..='¬' => 0x89 + char_offset(c, 'ª'),    // 3
-        '☺'..='☼' => 0x8C + char_offset(c, '☺'), // 3
-        'δ'..='ε' => 0x8F + char_offset(c, 'δ'),    // 2
-        '∙'..='√' => 0x91 + char_offset(c, '∙'), // 2
-        '∞'..='∟' => 0x93 + char_offset(c, '∞'), // 2
-        '≤'..='≥' => 0x95 + char_offset(c, '≤'), // 2
-        '⌠'..='⌡' => 0x97 + char_offset(c, '⌠'), // 2
-        '◘'..='◙' => 0x99 + char_offset(c, '◘'), // 2
-        '♥'..='♦' => 0x9B + char_offset(c, '♥'), // 2
-        'σ'..='τ' => 0x9D + char_offset(c, 'σ'),    // 2
-        'ƒ' => 0x9F,
-
-        'Γ' => 0xA4,
-        'Θ' => 0xA6,
-        'Σ' => 0xA8,
-        'Φ' => 0xA9,
-        'Ω' => 0xAA,
-        'α' => 0xAB,
-        'π' => 0xAC,
-        'φ' => 0xAD,
-        '•' => 0xAE,
-        '‼' => 0xAF,
-        'ⁿ' => 0xB3,
-        '₧' => 0xB4,
-        '↨' => 0xB8,
-        '∩' => 0xB9,
-        '≈' => 0xBE,
-        '≡' => 0xC0,
-        '⌂' => 0xC1,
-        '⌐' => 0xC2,
-        '─' => 0xC3,
-        '│' => 0xC8,
-        '┌' => 0xCA,
-        '┐' => 0xCB,
-        '└' => 0xCC,
-        '┘' => 0xCD,
-        '├' => 0xCE,
-        '┤' => 0xCF,
-        '┬' => 0xD0,
-        '┴' => 0xD2,
-        '┼' => 0xD3,
-        '▀' => 0xD4,
-        '▄' => 0xD5,
-        '█' => 0xD7,
-        '▌' => 0xD8,
-        '■' => 0xD9,
-        '▬' => 0xDA,
-        '▲' => 0xDB,
-        '►' => 0xDD,
-        '▼' => 0xDE,
-        '◄' => 0xE3,
-        '○' => 0xF0,
-        '♀' => 0xF5,
-        '♂' => 0xF8,
-        '♠' => 0xFD,
-        '♣' => 0xFE,
-        _ => '?' as u32,
+        _ => '?' as usize,
     }
 }
 
@@ -281,14 +191,14 @@ fn benchmark_current_ascii(c: &mut Criterion) {
     c.bench_function("Remapped, ASCII characters", |b| {
         b.iter(|| {
             for c in chars.clone() {
-                let _ = char_offset_impl_remapped(black_box(c));
+                let _ = char_offset_impl(black_box(c));
             }
         })
     });
 }
 
 fn benchmark_original_all_chars(c: &mut Criterion) {
-    let chars = include_str!("../data/Characters.txt")
+    let chars = include_str!("../src/Characters_src.txt")
         .lines()
         .map(|l| l.chars())
         .flatten()
@@ -304,7 +214,7 @@ fn benchmark_original_all_chars(c: &mut Criterion) {
 }
 
 fn benchmark_current_all_chars(c: &mut Criterion) {
-    let chars = include_str!("../data/Characters.txt")
+    let chars = include_str!("../doc/Characters.txt")
         .lines()
         .map(|l| l.chars())
         .flatten()
@@ -313,7 +223,7 @@ fn benchmark_current_all_chars(c: &mut Criterion) {
     c.bench_function("Remapped", |b| {
         b.iter(|| {
             for c in chars.iter() {
-                let _ = char_offset_impl_remapped(black_box(*c));
+                let _ = char_offset_impl(black_box(*c));
             }
         })
     });

@@ -10,7 +10,7 @@ use embedded_graphics::{
 use embedded_graphics_simulator::{OutputSettingsBuilder, SimulatorDisplay, Window};
 use ibm437::*;
 
-const TEST_TEXT: &str = include_str!("../data/Characters.txt");
+const TEST_TEXT: &str = include_str!("../doc/Characters.txt");
 
 fn main() -> Result<(), core::convert::Infallible> {
     let mut display: SimulatorDisplay<Rgb888> = SimulatorDisplay::new(Size::new(1000, 500));
@@ -23,7 +23,7 @@ fn main() -> Result<(), core::convert::Infallible> {
 
     let text_style = TextStyle::default();
 
-    let sizes = [IBM437_8X8_NORMAL, IBM437_8X8_BOLD, IBM437_9X14_NORMAL];
+    let sizes = [IBM437_8X8_REGULAR, IBM437_8X8_BOLD, IBM437_9X14_REGULAR];
 
     let mut top_left = Point::new(10, 20);
 
