@@ -1,4 +1,3 @@
-
 #[warn(dead_code)]
 pub const CHARS_PER_ROW: usize = 16;
 

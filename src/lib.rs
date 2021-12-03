@@ -9,14 +9,17 @@ use embedded_graphics::{
 };
 
 mod char_offset;
-use char_offset::{ CHARS_PER_ROW, char_offset_impl };
+use char_offset::{char_offset_impl, CHARS_PER_ROW};
 
 /// The 8x8 regular
 ///
 /// [![8x8 regular font spritemap screenshot](https://raw.githubusercontent.com/sbechet/ibm437/master/doc/ibm437_font_8_8_regular.png)](https://raw.githubusercontent.com/sbechet/ibm437/master/doc/ibm437_font_8_8_regular.png)
 ///
 pub const IBM437_8X8_REGULAR: MonoFont = MonoFont {
-    image: ImageRaw::new_binary(include_bytes!("../target/ibm437_font_8_8_regular.raw"), CHARS_PER_ROW as u32 * 8),
+    image: ImageRaw::new_binary(
+        include_bytes!("../target/ibm437_font_8_8_regular.raw"),
+        CHARS_PER_ROW as u32 * 8,
+    ),
     glyph_mapping: &char_offset_impl,
     character_size: Size::new(8, 8),
     character_spacing: 0,
@@ -30,7 +33,10 @@ pub const IBM437_8X8_REGULAR: MonoFont = MonoFont {
 /// [![8x8 bold font spritemap screenshot](https://raw.githubusercontent.com/sbechet/ibm437/master/doc/ibm437_font_8_8_bold.png)](https://raw.githubusercontent.com/sbechet/ibm437/master/doc/ibm437_font_8_8_bold.png)
 ///
 pub const IBM437_8X8_BOLD: MonoFont = MonoFont {
-    image: ImageRaw::new_binary(include_bytes!("../target/ibm437_font_8_8_bold.raw"), CHARS_PER_ROW as u32 * 8),
+    image: ImageRaw::new_binary(
+        include_bytes!("../target/ibm437_font_8_8_bold.raw"),
+        CHARS_PER_ROW as u32 * 8,
+    ),
     glyph_mapping: &char_offset_impl,
     character_size: Size::new(8, 8),
     character_spacing: 0,
@@ -44,7 +50,10 @@ pub const IBM437_8X8_BOLD: MonoFont = MonoFont {
 /// [![9x14 regular font spritemap screenshot](https://raw.githubusercontent.com/sbechet/ibm437/master/doc/ibm437_font_9_14_regular.png)](https://raw.githubusercontent.com/sbechet/ibm437/master/doc/ibm437_font_9_14_regular.png)
 ///
 pub const IBM437_9X14_REGULAR: MonoFont = MonoFont {
-    image: ImageRaw::new_binary(include_bytes!("../target/ibm437_font_9_14_regular.raw"), CHARS_PER_ROW as u32 * 9),
+    image: ImageRaw::new_binary(
+        include_bytes!("../target/ibm437_font_9_14_regular.raw"),
+        CHARS_PER_ROW as u32 * 9,
+    ),
     glyph_mapping: &char_offset_impl,
     character_size: Size::new(9, 14),
     character_spacing: 0,
