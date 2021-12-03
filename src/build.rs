@@ -1,4 +1,4 @@
-use std::fs::File;
+use std::fs::{ create_dir_all, File };
 use std::io::prelude::*;
 use std::path::Path;
 
@@ -232,6 +232,9 @@ fn main() -> std::io::Result<()> {
         .map(|l| l.chars())
         .flatten()
         .collect::<Vec<char>>();
+
+    // helper for https://docs.rs because other target path
+    create_dir_all(Path::new("target"))?;
 
     extract_9x14(&characters, IBM437_SRC)?;
     extract_8x8_regular(&characters, IBM437_SRC)?;
