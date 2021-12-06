@@ -91,14 +91,11 @@ fn extract_9x14(characters: &Vec<char>, ibm437_src: &[u8; 8192]) -> std::io::Res
             INPUT_HEIGHT_LEN,
         );
     }
-    save_9_14("doc/ibm437_font_9_14_regular.raw", &font_output)?;
+    save_9_14(&font_output)?;
     Ok(())
 }
 
-fn save_9_14(
-    filename: &str,
-    font_input: &[u8; 2 * CHARS_PER_ROW * 14 * (256 / CHARS_PER_ROW)],
-) -> std::io::Result<()> {
+fn save_9_14(font_input: &[u8; 2 * CHARS_PER_ROW * 14 * (256 / CHARS_PER_ROW)]) -> std::io::Result<()> {
     let font_output_data: [u8; 9 * 14 * 256 / 8] = [0u8; 9 * 14 * 256 / 8];
     let mut font_outputb: BitArray<Msb0, _> = BitArray::new(font_output_data);
     let font_inputb: BitArray<Msb0, _> = BitArray::new(*font_input);
@@ -121,12 +118,16 @@ fn save_9_14(
         }
     }
 
-    let path = Path::new(filename);
+    let mut out_dir = std::env::var("OUT_DIR").unwrap();
+    out_dir.push_str("/ibm437_font_9_14_regular.raw");
+    let path = Path::new(&out_dir);
     let mut file = File::create(path)?;
     file.write_all(font_outputb.as_raw_slice())?;
 
+    let mut out_dir = std::env::var("OUT_DIR").unwrap();
+    out_dir.push_str("/ibm437_font_9_14_regular.png");
     save_png(
-        "doc/ibm437_font_9_14_regular.png",
+        &out_dir,
         font_outputb.as_raw_slice(),
         9 * CHARS_PER_ROW,
         14 * (256 / CHARS_PER_ROW),
@@ -158,9 +159,16 @@ fn extract_8x8_regular(characters: &Vec<char>, ibm437_src: &[u8; 8192]) -> std::
         );
     }
 
-    save_raw("doc/ibm437_font_8_8_regular.raw", &font_output)?;
+    let mut out_dir = std::env::var("OUT_DIR").unwrap();
+    out_dir.push_str("/ibm437_font_8_8_regular.raw");
+    save_raw(
+        &out_dir,
+        &font_output
+    )?;
+    let mut out_dir = std::env::var("OUT_DIR").unwrap();
+    out_dir.push_str("/ibm437_font_8_8_regular.png");
     save_png(
-        "doc/ibm437_font_8_8_regular.png",
+        &out_dir,
         &font_output,
         8 * CHARS_PER_ROW,
         8 * (256 / CHARS_PER_ROW),
@@ -192,13 +200,21 @@ fn extract_8x8_bold(characters: &Vec<char>, ibm437_src: &[u8; 8192]) -> std::io:
         );
     }
 
-    save_raw("doc/ibm437_font_8_8_bold.raw", &font_output)?;
+    let mut out_dir = std::env::var("OUT_DIR").unwrap();
+    out_dir.push_str("/ibm437_font_8_8_bold.raw");
+    save_raw(
+        &out_dir,
+        &font_output
+    )?;
+    let mut out_dir = std::env::var("OUT_DIR").unwrap();
+    out_dir.push_str("/ibm437_font_8_8_bold.png");
     save_png(
-        "doc/ibm437_font_8_8_bold.png",
+        &out_dir,
         &font_output,
         8 * CHARS_PER_ROW,
         8 * (256 / CHARS_PER_ROW),
     )?;
+
     Ok(())
 }
 
@@ -211,7 +227,9 @@ fn characters_mapping(characters: &Vec<char>) -> std::io::Result<()> {
         mapping[chr_index] = *chr;
     }
 
-    let path = Path::new("doc/Characters.txt");
+    let mut out_dir = std::env::var("OUT_DIR").unwrap();
+    out_dir.push_str("/Characters.txt");
+    let path = Path::new(&out_dir);
     let mut file = File::create(path)?;
 
     for (i, c) in mapping.iter().enumerate() {
