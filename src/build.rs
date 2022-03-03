@@ -97,8 +97,8 @@ fn extract_9x14(characters: &Vec<char>, ibm437_src: &[u8; 8192]) -> std::io::Res
 
 fn save_9_14(font_input: &[u8; 2 * CHARS_PER_ROW * 14 * (256 / CHARS_PER_ROW)]) -> std::io::Result<()> {
     let font_output_data: [u8; 9 * 14 * 256 / 8] = [0u8; 9 * 14 * 256 / 8];
-    let mut font_outputb: BitArray<Msb0, _> = BitArray::new(font_output_data);
-    let font_inputb: BitArray<Msb0, _> = BitArray::new(*font_input);
+    let mut font_outputb: BitArray<_, Msb0> = BitArray::new(font_output_data);
+    let font_inputb: BitArray<_, Msb0> = BitArray::new(*font_input);
 
     for y in 0..(256 / CHARS_PER_ROW) {
         for x in 0..CHARS_PER_ROW {

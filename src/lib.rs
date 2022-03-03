@@ -15,6 +15,7 @@ use char_offset::{char_offset_impl, CHARS_PER_ROW};
 ///
 /// [![8x8 regular font spritemap screenshot](https://raw.githubusercontent.com/sbechet/ibm437/master/doc/ibm437_font_8_8_regular.png)](https://raw.githubusercontent.com/sbechet/ibm437/master/doc/ibm437_font_8_8_regular.png)
 ///
+#[cfg(feature = "regular8x8")]
 pub const IBM437_8X8_REGULAR: MonoFont = MonoFont {
     image: ImageRaw::new_binary(
         include_bytes!(concat!(core::env!("OUT_DIR"),"/ibm437_font_8_8_regular.raw")),
@@ -32,6 +33,7 @@ pub const IBM437_8X8_REGULAR: MonoFont = MonoFont {
 ///
 /// [![8x8 bold font spritemap screenshot](https://raw.githubusercontent.com/sbechet/ibm437/master/doc/ibm437_font_8_8_bold.png)](https://raw.githubusercontent.com/sbechet/ibm437/master/doc/ibm437_font_8_8_bold.png)
 ///
+#[cfg(feature = "bold8x8")]
 pub const IBM437_8X8_BOLD: MonoFont = MonoFont {
     image: ImageRaw::new_binary(
         include_bytes!(concat!(core::env!("OUT_DIR"),"/ibm437_font_8_8_bold.raw")),
@@ -49,6 +51,7 @@ pub const IBM437_8X8_BOLD: MonoFont = MonoFont {
 ///
 /// [![9x14 regular font spritemap screenshot](https://raw.githubusercontent.com/sbechet/ibm437/master/doc/ibm437_font_9_14_regular.png)](https://raw.githubusercontent.com/sbechet/ibm437/master/doc/ibm437_font_9_14_regular.png)
 ///
+#[cfg(feature = "regular9x14")]
 pub const IBM437_9X14_REGULAR: MonoFont = MonoFont {
     image: ImageRaw::new_binary(
         include_bytes!(concat!(core::env!("OUT_DIR"),"/ibm437_font_9_14_regular.raw")),

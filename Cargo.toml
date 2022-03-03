@@ -19,8 +19,14 @@ categories = ["rendering", "embedded", "no-std"]
 name = "bench_mapping"
 harness = false
 
+[features]
+default = ["regular8x8", "bold8x8", "regular9x14"]
+regular8x8 = []
+bold8x8 = []
+regular9x14 = []
+
 [build-dependencies]
-bitvec = "0.22"
+bitvec = "1"
 png = "0.17"
 
 [dependencies]

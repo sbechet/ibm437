@@ -6,6 +6,7 @@ use embedded_graphics::{
     prelude::*,
     primitives::{Line, PrimitiveStyle},
     text::{Text, TextStyle},
+    mono_font::MonoFont
 };
 use embedded_graphics_simulator::{OutputSettingsBuilder, SimulatorDisplay, Window};
 use ibm437::*;
@@ -13,7 +14,7 @@ use ibm437::*;
 const TEST_TEXT: &str = include_str!("../doc/Characters.txt");
 
 fn main() -> Result<(), core::convert::Infallible> {
-    let mut display: SimulatorDisplay<Rgb888> = SimulatorDisplay::new(Size::new(1000, 500));
+    let mut display: SimulatorDisplay<Rgb888> = SimulatorDisplay::new(Size::new(512, 240));
 
     let character_style = MonoTextStyleBuilder::new()
         // Uncomment to add strikethrough and/or underline to all sizes.
@@ -23,7 +24,16 @@ fn main() -> Result<(), core::convert::Infallible> {
 
     let text_style = TextStyle::default();
 
-    let sizes = [IBM437_8X8_REGULAR, IBM437_8X8_BOLD, IBM437_9X14_REGULAR];
+    let mut sizes:Vec<MonoFont> = vec!();
+
+    #[cfg(feature = "regular8x8")]
+    sizes.push(IBM437_8X8_REGULAR);
+
+    #[cfg(feature = "bold8x8")]
+    sizes.push(IBM437_8X8_BOLD);
+
+    #[cfg(feature = "regular9x14")]
+    sizes.push(IBM437_9X14_REGULAR);
 
     let mut top_left = Point::new(10, 20);
 
