@@ -1,7 +1,7 @@
 [package]
 name = "ibm437"
 description = "The IBM437 font for uses with the embedded-graphics crate."
-version = "0.2.3"
+version = "0.3.0"
 authors = ["Sebastien Bechet <sebastien.bechet@free.fr>"]
 edition = "2021"
 build = "src/build.rs"
