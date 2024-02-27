@@ -1,7 +1,7 @@
 [package]
 name = "ibm437"
 description = "The IBM437 font for uses with the embedded-graphics crate."
-version = "0.3.2"
+version = "0.3.3"
 authors = ["Sebastien Bechet <sebastien.bechet@free.fr>"]
 edition = "2021"
 build = "src/build.rs"
@@ -33,6 +33,6 @@ png = "0.17"
 embedded-graphics = "0.8"
 
 [dev-dependencies]
-criterion = "0.3"
+criterion = "0"
 embedded-graphics-simulator = "0.6"
 
