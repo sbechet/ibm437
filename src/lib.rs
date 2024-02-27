@@ -17,8 +17,11 @@ use char_offset::{char_offset_impl, CHARS_PER_ROW};
 ///
 #[cfg(feature = "regular8x8")]
 pub const IBM437_8X8_REGULAR: MonoFont = MonoFont {
-    image: ImageRaw::new_binary(
-        include_bytes!(concat!(core::env!("OUT_DIR"),"/ibm437_font_8_8_regular.raw")),
+    image: ImageRaw::new(
+        include_bytes!(concat!(
+            core::env!("OUT_DIR"),
+            "/ibm437_font_8_8_regular.raw"
+        )),
         CHARS_PER_ROW as u32 * 8,
     ),
     glyph_mapping: &char_offset_impl,
@@ -35,8 +38,8 @@ pub const IBM437_8X8_REGULAR: MonoFont = MonoFont {
 ///
 #[cfg(feature = "bold8x8")]
 pub const IBM437_8X8_BOLD: MonoFont = MonoFont {
-    image: ImageRaw::new_binary(
-        include_bytes!(concat!(core::env!("OUT_DIR"),"/ibm437_font_8_8_bold.raw")),
+    image: ImageRaw::new(
+        include_bytes!(concat!(core::env!("OUT_DIR"), "/ibm437_font_8_8_bold.raw")),
         CHARS_PER_ROW as u32 * 8,
     ),
     glyph_mapping: &char_offset_impl,
@@ -53,8 +56,11 @@ pub const IBM437_8X8_BOLD: MonoFont = MonoFont {
 ///
 #[cfg(feature = "regular9x14")]
 pub const IBM437_9X14_REGULAR: MonoFont = MonoFont {
-    image: ImageRaw::new_binary(
-        include_bytes!(concat!(core::env!("OUT_DIR"),"/ibm437_font_9_14_regular.raw")),
+    image: ImageRaw::new(
+        include_bytes!(concat!(
+            core::env!("OUT_DIR"),
+            "/ibm437_font_9_14_regular.raw"
+        )),
         CHARS_PER_ROW as u32 * 9,
     ),
     glyph_mapping: &char_offset_impl,

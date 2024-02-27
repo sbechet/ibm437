@@ -30,9 +30,9 @@ bitvec = "1"
 png = "0.17"
 
 [dependencies]
-embedded-graphics = "0.7"
+embedded-graphics = "0.8"
 
 [dev-dependencies]
 criterion = "0.3"
-embedded-graphics-simulator = "0.3"
+embedded-graphics-simulator = "0.6"
 
